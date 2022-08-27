@@ -4,12 +4,21 @@ services:
   web:
     build: .
     command: python /code/manage.py runserver 0.0.0.0:8000
+    user: $USER_ID:$GROUP_ID
     volumes:
       - .:/code
-    ports:
-      - 8000:8000
+    networks:
+      - default
+      - traefik-proxy
     depends_on:
       - db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.django.entrypoints=websecure"
+      - "traefik.http.routers.django.tls=true"
+      - "traefik.http.routers.django.rule=Host(`$HOSTNAME`)"
+      - "traefik.http.services.django.loadbalancer.server.port=8000"
+      - "traefik.docker.network=traefik-proxy"
   db:
     image: postgres:13
     volumes:
@@ -19,3 +28,8 @@ services:
 
 volumes:
   postgres_data:
+
+networks:
+  traefik-proxy:
+    name: traefik-proxy
+    external: true
