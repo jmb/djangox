@@ -8,15 +8,14 @@ env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-SECRET_KEY
-SECRET_KEY = env("SECRET_KEY")
+sSECRET_KEY = env("SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = env("DEBUG", default=False)
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost", "0.0.0.0", "127.0.0.1"])
 CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
-# APPS
-# ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -38,8 +37,6 @@ INSTALLED_APPS = [
     "pages",
 ]
 
-# MIDDLEWARE
-# ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -53,20 +50,17 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# URLS
-# ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#root-urlconf
 ROOT_URLCONF = "django_project.urls"
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = "django_project.wsgi.application"
 
-# TEMPLATES
-# ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#templates
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ["templates"],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -79,8 +73,6 @@ TEMPLATES = [
     },
 ]
 
-# DATABASES
-# ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     "default": env.dj_db_url("DATABASE_URL"),
@@ -105,8 +97,6 @@ DATABASES = {
 #     }
 # }
 
-# PASSWORDS
-# ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -123,62 +113,61 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# INTERNATIONALIZATION
-# ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = "en-us"
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#time-zone
 TIME_ZONE = "UTC"
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-USE_I18N
 USE_I18N = True
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-l10n
 USE_L10N = True
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
 
-
-# STATIC
-# ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
-STATIC_ROOT = str(BASE_DIR.joinpath("staticfiles"))
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
 STATIC_URL = "/static/"
+
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = [str(BASE_DIR.joinpath("static"))]
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
 # http://whitenoise.evans.io/en/stable/django.html#add-compression-and-caching-support
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# DJANGO-CRISPY-FORMS CONFIGS
-# ------------------------------------------------------------------------------
+
+# django-crispy-forms
 # https://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-# EMAIL
-# ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# DJANGO-DEBUG-TOOLBAR CONFIGS
-# ------------------------------------------------------------------------------
+# django-debug-toolbar
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
 # https://docs.djangoproject.com/en/dev/ref/settings/#internal-ips
 INTERNAL_IPS = ["127.0.0.1"]
 
-# CUSTOM USER MODEL CONFIGS
-# ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#substituting-a-custom-user-model
 AUTH_USER_MODEL = "accounts.CustomUser"
 
-# DJANGO-ALLAUTH CONFIGS
-# ------------------------------------------------------------------------------
+# django-allauth config
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
+
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = "home"
+
 # https://django-allauth.readthedocs.io/en/latest/views.html#logout-account-logout
 ACCOUNT_LOGOUT_REDIRECT_URL = "home"
+
 # https://django-allauth.readthedocs.io/en/latest/installation.html?highlight=backends
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
